@@ -4,6 +4,9 @@ import com.myapp.edu.domain.Member;
 import com.myapp.edu.dto.request.MemberJoinDto;
 import com.myapp.edu.dto.response.ErrorResult;
 import com.myapp.edu.dto.response.ErrorResponse;
+import com.myapp.edu.dto.response.MemberDto;
+import com.myapp.edu.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -18,7 +21,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
-
+    private final MemberService memberService;
+    @Autowired
+    public MemberController(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @PostMapping
     public ResponseEntity<?> join(@Validated @RequestBody MemberJoinDto memberJoinDto, BindingResult bindingResult) {
@@ -32,11 +39,11 @@ public class MemberController {
                             fieldError.getDefaultMessage())
                     )
                     .toList();
-
             return new ResponseEntity<ErrorResponse>(new ErrorResponse(errors), HttpStatus.BAD_REQUEST);
         }
         // 회원 가입 로직 처리
-        return new ResponseEntity<String>("ok", HttpStatus.CREATED);
+        Member member = memberService.join(convertToMemberEntity(memberJoinDto));
+        return new ResponseEntity<MemberDto>(convertToMemberDto(member), HttpStatus.CREATED);
     }
 
     private Member convertToMemberEntity(MemberJoinDto memberJoinDto) {
@@ -47,5 +54,8 @@ public class MemberController {
                 memberJoinDto.getPhoneNumber(),
                 memberJoinDto.getRole()
         );
+    }
+    private MemberDto convertToMemberDto(Member member) {
+        return new MemberDto(member.getId(), member.getUsername(), member.getEmail(), member.getPhoneNumber(), member.getRole());
     }
 }
