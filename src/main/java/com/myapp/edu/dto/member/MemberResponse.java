@@ -1,4 +1,4 @@
-package com.myapp.edu.dto.response;
+package com.myapp.edu.dto.member;
 
 import com.myapp.edu.domain.enums.Role;
 import lombok.Getter;
@@ -8,14 +8,14 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class MemberDto {
+public class MemberResponse {
     private Long id;
     private String username;
     private String email;
     private String phoneNumber;
     private Role role;
 
-    public MemberDto(Long id, String username, String email, String phoneNumber, Role role) {
+    public MemberResponse(Long id, String username, String email, String phoneNumber, Role role) {
         this.id = id;
         this.username = username;
         this.email = email;

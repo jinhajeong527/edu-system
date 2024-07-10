@@ -1,4 +1,4 @@
-package com.myapp.edu.dto.response;
+package com.myapp.edu.dto.error;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

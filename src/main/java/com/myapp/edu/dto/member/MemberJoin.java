@@ -1,4 +1,4 @@
-package com.myapp.edu.dto.request;
+package com.myapp.edu.dto.member;
 
 import com.myapp.edu.domain.enums.Role;
 import jakarta.validation.constraints.*;
@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class MemberJoinDto {
+public class MemberJoin {
     @NotBlank(message = "Username is required")
     private String username;
 
