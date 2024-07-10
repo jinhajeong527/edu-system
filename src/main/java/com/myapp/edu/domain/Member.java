@@ -23,6 +23,8 @@ public class Member extends BaseTimeEntity {
 
     private String email;
 
+    private String password;
+
     private String phoneNumber;
 
     @Enumerated(EnumType.STRING)
@@ -31,9 +33,10 @@ public class Member extends BaseTimeEntity {
     @OneToMany(mappedBy = "member")
     private Set<MemberCourse> memberCourseList = new HashSet<>();
 
-    public Member(String username, String email, String phoneNumber, Role role) {
+    public Member(String username, String email, String password, String phoneNumber, Role role) {
         this.username = username;
         this.email = email;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
     }
