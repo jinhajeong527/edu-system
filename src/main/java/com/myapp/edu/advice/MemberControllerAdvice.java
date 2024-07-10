@@ -1,8 +1,8 @@
 package com.myapp.edu.advice;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
-import com.myapp.edu.dto.request.response.ErrorResponse;
-import com.myapp.edu.dto.request.response.ErrorResult;
+import com.myapp.edu.dto.response.ErrorResponse;
+import com.myapp.edu.dto.response.ErrorResult;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;

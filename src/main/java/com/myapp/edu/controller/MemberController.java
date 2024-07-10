@@ -1,8 +1,9 @@
 package com.myapp.edu.controller;
 
+import com.myapp.edu.domain.Member;
 import com.myapp.edu.dto.request.MemberJoinDto;
-import com.myapp.edu.dto.request.response.ErrorResult;
-import com.myapp.edu.dto.request.response.ErrorResponse;
+import com.myapp.edu.dto.response.ErrorResult;
+import com.myapp.edu.dto.response.ErrorResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -17,6 +18,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/members")
 public class MemberController {
+
+
     @PostMapping
     public ResponseEntity<?> join(@Validated @RequestBody MemberJoinDto memberJoinDto, BindingResult bindingResult) {
         // 유효성 검사 실패 처리
@@ -34,5 +37,15 @@ public class MemberController {
         }
         // 회원 가입 로직 처리
         return new ResponseEntity<String>("ok", HttpStatus.CREATED);
+    }
+
+    private Member convertToMemberEntity(MemberJoinDto memberJoinDto) {
+        return new Member(
+                memberJoinDto.getUsername(),
+                memberJoinDto.getEmail(),
+                memberJoinDto.getPassword(),
+                memberJoinDto.getPhoneNumber(),
+                memberJoinDto.getRole()
+        );
     }
 }

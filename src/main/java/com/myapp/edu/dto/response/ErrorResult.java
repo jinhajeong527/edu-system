@@ -1,4 +1,4 @@
-package com.myapp.edu.dto.request.response;
+package com.myapp.edu.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
