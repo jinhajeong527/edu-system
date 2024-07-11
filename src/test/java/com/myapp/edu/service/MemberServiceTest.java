@@ -14,6 +14,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
 import static org.mockito.Mockito.verify;
+
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
     @Mock
@@ -43,6 +44,5 @@ class MemberServiceTest {
 
         verify(memberRepository).save(member);
     }
-
 
 }
