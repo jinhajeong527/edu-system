@@ -71,7 +71,7 @@ class MemberControllerTest {
 
         when(memberService.join(ArgumentMatchers.any(Member.class))).thenReturn(member);
         // when
-        MvcResult result = mockMvc.perform(post("/member")
+        MvcResult result = mockMvc.perform(post("/members")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(memberJoinDto)))
                         .andExpect(status().isCreated())
