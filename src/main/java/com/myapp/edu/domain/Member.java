@@ -30,7 +30,7 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
     private Set<MemberCourse> memberCourseList = new HashSet<>();
 
     public Member(String username, String email, String password, String phoneNumber, Role role) {
