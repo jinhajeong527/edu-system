@@ -1,6 +1,6 @@
 package com.myapp.edu.dto.member;
 
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

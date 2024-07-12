@@ -1,4 +1,4 @@
-package com.myapp.edu.domain.enums;
+package com.myapp.edu.enums;
 
 public enum Status {
     TEACHING,

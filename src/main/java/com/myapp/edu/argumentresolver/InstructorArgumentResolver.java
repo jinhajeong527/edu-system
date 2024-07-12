@@ -2,7 +2,7 @@ package com.myapp.edu.argumentresolver;
 
 import com.myapp.edu.annotation.Instructor;
 import com.myapp.edu.common.MemberConst;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.member.MemberSession;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;

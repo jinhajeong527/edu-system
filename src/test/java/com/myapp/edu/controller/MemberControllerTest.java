@@ -2,7 +2,7 @@ package com.myapp.edu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myapp.edu.domain.Member;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.member.MemberJoin;
 import com.myapp.edu.dto.error.ErrorResponse;
 import com.myapp.edu.dto.member.MemberResponse;

@@ -1,11 +1,13 @@
 package com.myapp.edu.domain;
 
-import com.myapp.edu.domain.enums.Status;
+import com.myapp.edu.enums.Status;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class MemberCourse {
     @Id
@@ -19,6 +21,7 @@ public class MemberCourse {
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 

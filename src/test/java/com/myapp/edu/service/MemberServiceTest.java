@@ -1,7 +1,7 @@
 package com.myapp.edu.service;
 
 import com.myapp.edu.domain.Member;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.repository.MemberRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

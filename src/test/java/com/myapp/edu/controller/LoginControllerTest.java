@@ -3,7 +3,7 @@ package com.myapp.edu.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myapp.edu.common.MemberConst;
 import com.myapp.edu.domain.Member;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.member.MemberLogin;
 import com.myapp.edu.dto.member.MemberSession;
 import com.myapp.edu.service.LoginService;

@@ -1,6 +1,6 @@
 package com.myapp.edu.domain;
 
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.enums.Role;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
