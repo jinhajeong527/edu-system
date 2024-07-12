@@ -19,8 +19,8 @@ public class InstructorArgumentResolver implements HandlerMethodArgumentResolver
     public boolean supportsParameter(MethodParameter parameter) {
 
         boolean hasInstructorAnnotation = parameter.hasParameterAnnotation(Instructor.class);
-        boolean hassMemberSessionType = MemberSession.class.isAssignableFrom(parameter.getParameterType());
-        return hasInstructorAnnotation && hassMemberSessionType;
+        boolean hasMemberSessionType = MemberSession.class.isAssignableFrom(parameter.getParameterType());
+        return hasInstructorAnnotation && hasMemberSessionType;
     }
 
     @Override
