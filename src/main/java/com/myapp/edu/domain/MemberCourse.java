@@ -6,9 +6,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {@UniqueConstraint(columnNames = {"member_id", "course_id"})})
 public class MemberCourse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

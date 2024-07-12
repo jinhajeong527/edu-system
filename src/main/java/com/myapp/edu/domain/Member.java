@@ -2,9 +2,7 @@ package com.myapp.edu.domain;
 
 import com.myapp.edu.enums.Role;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -30,10 +28,19 @@ public class Member extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<MemberCourse> memberCourseList = new HashSet<>();
 
     public Member(String username, String email, String password, String phoneNumber, Role role) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+        this.role = role;
+    }
+
+    public Member(Long id, String username, String email, String password, String phoneNumber, Role role) {
+        this.id = id;
         this.username = username;
         this.email = email;
         this.password = password;

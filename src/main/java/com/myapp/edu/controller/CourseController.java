@@ -1,12 +1,16 @@
 package com.myapp.edu.controller;
 
 import com.myapp.edu.annotation.Instructor;
+import com.myapp.edu.common.MemberConst;
+import com.myapp.edu.dto.course.CourseApply;
 import com.myapp.edu.dto.course.CourseResponse;
 import com.myapp.edu.dto.course.CourseSave;
 import com.myapp.edu.dto.member.MemberSession;
 import com.myapp.edu.enums.SortOption;
 import com.myapp.edu.service.CourseService;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -14,6 +18,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/courses")
@@ -37,8 +44,20 @@ public class CourseController {
                                            @RequestParam(defaultValue = "RECENTLY_ADDED") SortOption sortOption,
                                            @RequestParam(defaultValue = "DESC") Sort.Direction direction) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(direction, sortOption.getField()));
-        Page<CourseResponse> courseResponse = courseService.getAllCourses(pageRequest);
-        return new ResponseEntity<>(courseResponse, HttpStatus.OK);
+        Page<CourseResponse> courses = courseService.getAllCourses(pageRequest);
+        return new ResponseEntity<>(courses, HttpStatus.OK);
+    }
+
+    @PostMapping("/apply")
+    public ResponseEntity<?> applyForCourses(
+            @SessionAttribute(name = MemberConst.LOGIN_MEMBER, required = false) MemberSession memberSession,
+            @Validated @RequestBody CourseApply courseApply) {
+        try {
+            List<CourseResponse> courses = courseService.applyForCourses(memberSession.getEmail(), courseApply);
+            return new ResponseEntity<>(courses, HttpStatus.OK);
+        } catch(DataIntegrityViolationException e) {
+            throw new DataIntegrityViolationException("이미 수강신청 완료된 강의입니다.");
+        }
     }
 
 }
