@@ -3,7 +3,8 @@ package com.myapp.edu.service;
 import com.myapp.edu.domain.Course;
 import com.myapp.edu.domain.Member;
 import com.myapp.edu.domain.MemberCourse;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.dto.course.CourseResponse;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.course.CourseSave;
 import com.myapp.edu.repository.CourseRepository;
 import com.myapp.edu.repository.MemberCourseRepository;
@@ -62,7 +63,7 @@ class CourseServiceTest {
         given(courseRepository.save(ArgumentMatchers.any(Course.class))).willReturn(course);
 
         // when
-        Course savedCourse = courseService.create(instructorEmail, courseSave);
+        CourseResponse savedCourse = courseService.create(instructorEmail, courseSave);
 
         // then
         assertThat(savedCourse).isNotNull();

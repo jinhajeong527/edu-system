@@ -2,8 +2,8 @@ package com.myapp.edu.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myapp.edu.common.MemberConst;
-import com.myapp.edu.domain.Course;
-import com.myapp.edu.domain.enums.Role;
+import com.myapp.edu.dto.course.CourseResponse;
+import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.course.CourseSave;
 import com.myapp.edu.dto.member.MemberSession;
 import com.myapp.edu.service.CourseService;
@@ -16,6 +16,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -49,7 +50,8 @@ class CourseControllerTest {
     void shouldCreateCourse() throws Exception {
         MemberSession session = new MemberSession("test@example.com", Role.INSTRUCTOR);
         CourseSave courseSave = new CourseSave("course1", 5L, new BigDecimal(100000));
-        Course course = new Course("course1", new BigDecimal(100000), 5L);
+        CourseResponse course = new CourseResponse(1L, "course1", new BigDecimal(100000),
+                5L, 0L, Collections.singletonList("testuser"));
 
         given(courseService.create(
                 ArgumentMatchers.anyString(), ArgumentMatchers.any(CourseSave.class))).willReturn(course);

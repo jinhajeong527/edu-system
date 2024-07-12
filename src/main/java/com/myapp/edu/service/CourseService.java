@@ -3,7 +3,8 @@ package com.myapp.edu.service;
 import com.myapp.edu.domain.Course;
 import com.myapp.edu.domain.Member;
 import com.myapp.edu.domain.MemberCourse;
-import com.myapp.edu.domain.enums.Status;
+import com.myapp.edu.dto.course.CourseResponse;
+import com.myapp.edu.enums.Status;
 import com.myapp.edu.dto.course.CourseSave;
 import com.myapp.edu.repository.CourseRepository;
 import com.myapp.edu.repository.MemberCourseRepository;
@@ -26,7 +27,7 @@ public class CourseService {
     private final MemberCourseRepository memberCourseRepository;
 
     @Transactional
-    public Course create(String instructorEmail, CourseSave courseSave) {
+    public CourseResponse create(String instructorEmail, CourseSave courseSave) {
         Optional<Member> memberOptional = memberRepository.findByEmail(instructorEmail);
         Member member = memberOptional
                 .orElseThrow(() -> new IllegalStateException("No member found"));
@@ -34,7 +35,7 @@ public class CourseService {
         Course savedCourse = courseRepository.save(new Course(courseSave.getTitle(), courseSave.getPrice(), courseSave.getMaxCapacity()));
 
         memberCourseRepository.save(new MemberCourse(member, savedCourse, Status.TEACHING));
-        return savedCourse;
-    }
 
+        return CourseResponse.fromEntity(savedCourse, member);
+    }
 }
