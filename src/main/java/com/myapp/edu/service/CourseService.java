@@ -11,6 +11,8 @@ import com.myapp.edu.repository.MemberCourseRepository;
 import com.myapp.edu.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -37,5 +39,10 @@ public class CourseService {
         memberCourseRepository.save(new MemberCourse(member, savedCourse, Status.TEACHING));
 
         return CourseResponse.fromEntity(savedCourse, member);
+    }
+
+    public Page<CourseResponse> getAllCourses(PageRequest pageRequest) {
+        Page<Course> courses = courseRepository.findAllCourses(pageRequest);
+        return courses.map(CourseResponse::fromEntity);
     }
 }
