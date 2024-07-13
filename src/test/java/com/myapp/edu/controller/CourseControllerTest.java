@@ -43,7 +43,7 @@ class CourseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(courseSave))
                         .sessionAttr(MemberConst.LOGIN_MEMBER, session))
-                        .andExpect(status().isUnauthorized());
+                        .andExpect(status().isForbidden());
     }
 
     @Test

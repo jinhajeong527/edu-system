@@ -6,6 +6,7 @@ import com.myapp.edu.dto.course.CourseApply;
 import com.myapp.edu.dto.course.CourseResponse;
 import com.myapp.edu.dto.course.CourseSave;
 import com.myapp.edu.dto.member.MemberSession;
+import com.myapp.edu.dto.rest.RestResponse;
 import com.myapp.edu.enums.SortOption;
 import com.myapp.edu.service.CourseService;
 import lombok.RequiredArgsConstructor;
@@ -32,10 +33,10 @@ public class CourseController {
     @PostMapping
     public ResponseEntity<?> create(@Instructor MemberSession memberSession, @Validated @RequestBody CourseSave courseSave) {
         if (memberSession == null) {
-            return new ResponseEntity<>("강사 회원만 강의를 등록할 수 있습니다.", HttpStatus.UNAUTHORIZED);
+            return new ResponseEntity<>(new RestResponse<>("강사 회원만 강의를 등록할 수 있습니다.", 403), HttpStatus.FORBIDDEN);
         }
         CourseResponse course = courseService.create(memberSession.getEmail(), courseSave);
-        return new ResponseEntity<>(course, HttpStatus.CREATED);
+        return new ResponseEntity<>(new RestResponse<>("강의가 성공적으로 등록 되었습니다", 201, course), HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -45,7 +46,7 @@ public class CourseController {
                                            @RequestParam(defaultValue = "DESC") Sort.Direction direction) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by(direction, sortOption.getField()));
         Page<CourseResponse> courses = courseService.getAllCourses(pageRequest);
-        return new ResponseEntity<>(courses, HttpStatus.OK);
+        return new ResponseEntity<>(new RestResponse<>("강의가 성공적으로 조회 되었습니다", 200, courses), HttpStatus.OK);
     }
 
     @PostMapping("/apply")
@@ -54,7 +55,7 @@ public class CourseController {
             @Validated @RequestBody CourseApply courseApply) {
         try {
             List<CourseResponse> courses = courseService.applyForCourses(memberSession.getEmail(), courseApply);
-            return new ResponseEntity<>(courses, HttpStatus.OK);
+            return new ResponseEntity<>(new RestResponse<>("수강 신청에 성공한 강의 목록입니다.", 200, courses), HttpStatus.OK);
         } catch(DataIntegrityViolationException e) {
             throw new DataIntegrityViolationException("이미 수강신청 완료된 강의입니다.");
         }
