@@ -11,6 +11,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -24,7 +25,8 @@ public class MemberControllerAdvice {
             String rejectedValue = ex.getValue() != null ? ex.getValue().toString() : "";
             ErrorResult errorResult = new ErrorResult(fieldName, rejectedValue, "Invalid " + fieldName);
 
-            RestResponse<ErrorResult> response = new RestResponse<>("입력 형식이 잘못되었습니다.", 400, errorResult);
+            RestResponse<List<ErrorResult>> response = new RestResponse<>(
+                    "입력 형식이 잘못 되었습니다.", 400, Collections.singletonList(errorResult));
 
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
