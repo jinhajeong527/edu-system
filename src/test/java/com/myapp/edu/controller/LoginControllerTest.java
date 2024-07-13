@@ -39,7 +39,7 @@ class LoginControllerTest {
         String testEmail = "test@example.com";
         String testPassword = "TestUser1";
 
-        Member member = new Member("testuser", testEmail, testPassword,
+        Member member = new Member(1L, "testuser", testEmail, testPassword,
                 "010-1234-5678", Role.INSTRUCTOR);
         when(loginService.login(testEmail, testPassword)).thenReturn(member);
 
