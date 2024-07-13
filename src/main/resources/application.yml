@@ -21,4 +21,13 @@ logging:
     org:
       hibernate:
         SQL: debug
-
+# SpringDoc 관련 설정
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger
+application:
+  name: Edu System Project
+  version: 1.0.0
+  description: Online learning system

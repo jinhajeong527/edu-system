@@ -1,4 +1,4 @@
-package com.myapp.edu;
+package com.myapp.edu.config;
 
 import com.myapp.edu.argumentresolver.InstructorArgumentResolver;
 import com.myapp.edu.interceptor.LoginCheckInterceptor;
@@ -14,12 +14,14 @@ import java.util.List;
 @RequiredArgsConstructor
 public class WebConfig implements WebMvcConfigurer {
 
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginCheckInterceptor())
                 .order(1)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/", "/auth/login", "/auth/logout", "/members", "/error", "/static/**");
+                .excludePathPatterns("/", "/auth/login", "/auth/logout", "/members", "/error", "/static/**",
+                        "/swagger-ui/**", "/swagger/**", "/api-docs/**");
     }
 
     @Override
