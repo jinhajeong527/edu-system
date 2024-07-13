@@ -1,10 +1,11 @@
 package com.myapp.edu.controller;
-
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.myapp.edu.domain.Member;
+import com.myapp.edu.dto.error.ErrorResult;
+import com.myapp.edu.dto.rest.RestResponse;
 import com.myapp.edu.enums.Role;
 import com.myapp.edu.dto.member.MemberJoin;
-import com.myapp.edu.dto.error.ErrorResponse;
 import com.myapp.edu.dto.member.MemberResponse;
 import com.myapp.edu.service.MemberService;
 
@@ -17,6 +18,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
@@ -52,34 +55,34 @@ class MemberControllerTest {
                         .andReturn();
         // then
         String contentAsString = result.getResponse().getContentAsString();
-        ErrorResponse errorResponse = objectMapper.readValue(contentAsString, ErrorResponse.class);
-        assertThat(errorResponse.getErrors().size()).isEqualTo(4);
+        RestResponse<List<ErrorResult>> restResponse = objectMapper.readValue(contentAsString, new TypeReference<>(){});
+        List<ErrorResult> list = restResponse.getData();
+        assertThat(list.size()).isEqualTo(4);
     }
 
     @Test
     void shouldReturnCreatedForValidInfo() throws Exception {
         // given
-        MemberJoin memberJoinDto = new MemberJoin(
-                "testuser", "test33@example.com", "TestUser2",
-                "010-1234-5678", Role.INSTRUCTOR
-        );
+        MemberJoin memberJoin = new MemberJoin("testuser", "test33@example.com",
+                "TestUser1", "010-1234-5678", Role.INSTRUCTOR);
 
-        Member member = new Member(
-                "testuser", "test33@example.com", "TestUser2",
-                "010-1234-5678", Role.INSTRUCTOR
-        );
+        Member member = new Member(1L, "testuser", "test33@example.com",
+                "TestUser1", "010-1234-5678", Role.INSTRUCTOR);
+        MemberResponse memberResponse = MemberResponse.convertToMemberResponse(member);
 
-        when(memberService.join(ArgumentMatchers.any(Member.class))).thenReturn(member);
+        when(memberService.join(ArgumentMatchers.any(MemberJoin.class))).thenReturn(memberResponse);
+
         // when
         MvcResult result = mockMvc.perform(post("/members")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(memberJoinDto)))
+                        .content(objectMapper.writeValueAsString(memberJoin)))
                         .andExpect(status().isCreated())
                         .andReturn();
         // then
         String contentAsString = result.getResponse().getContentAsString();
-        MemberResponse response = objectMapper.readValue(contentAsString, MemberResponse.class);
-
+        RestResponse<MemberResponse> restResponse = objectMapper.readValue(contentAsString, new TypeReference<>(){});
+        MemberResponse response  = restResponse.getData();
+        assertThat(response.getId()).isEqualTo(member.getId());
         assertThat(response.getUsername()).isEqualTo(member.getUsername());
         assertThat(response.getEmail()).isEqualTo(member.getEmail());
         assertThat(response.getPhoneNumber()).isEqualTo(member.getPhoneNumber());

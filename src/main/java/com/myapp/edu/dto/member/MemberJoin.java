@@ -1,5 +1,6 @@
 package com.myapp.edu.dto.member;
 
+import com.myapp.edu.domain.Member;
 import com.myapp.edu.enums.Role;
 import jakarta.validation.constraints.*;
 import lombok.Data;
@@ -40,5 +41,9 @@ public class MemberJoin {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public Member convertToMember() {
+        return new Member(getUsername(), getEmail(), getPassword(), getPhoneNumber(), getRole());
     }
 }

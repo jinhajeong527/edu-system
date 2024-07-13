@@ -1,5 +1,6 @@
 package com.myapp.edu.dto.member;
 
+import com.myapp.edu.domain.Member;
 import com.myapp.edu.enums.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +22,9 @@ public class MemberResponse {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.role = role;
+    }
+
+    public static MemberResponse convertToMemberResponse(Member member) {
+        return new MemberResponse(member.getId(), member.getUsername(), member.getEmail(), member.getPhoneNumber(), member.getRole());
     }
 }

@@ -1,8 +1,8 @@
 package com.myapp.edu.controller;
 
-import com.myapp.edu.domain.Member;
 import com.myapp.edu.dto.member.MemberJoin;
 import com.myapp.edu.dto.member.MemberResponse;
+import com.myapp.edu.dto.rest.RestResponse;
 import com.myapp.edu.service.MemberService;
 import lombok.RequiredArgsConstructor;
 
@@ -20,22 +20,10 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping
-    public ResponseEntity<MemberResponse> join(@Validated @RequestBody MemberJoin memberJoinDto) {
-        Member member = memberService.join(convertToMemberEntity(memberJoinDto));
-        return new ResponseEntity<>(convertToMemberDto(member), HttpStatus.CREATED);
-    }
-
-    private Member convertToMemberEntity(MemberJoin memberJoinDto) {
-        return new Member(
-                memberJoinDto.getUsername(),
-                memberJoinDto.getEmail(),
-                memberJoinDto.getPassword(),
-                memberJoinDto.getPhoneNumber(),
-                memberJoinDto.getRole()
-        );
-    }
-    private MemberResponse convertToMemberDto(Member member) {
-        return new MemberResponse(member.getId(), member.getUsername(), member.getEmail(), member.getPhoneNumber(), member.getRole());
+    public ResponseEntity<RestResponse<MemberResponse>> join(@Validated @RequestBody MemberJoin memberJoinDto) {
+        MemberResponse member = memberService.join(memberJoinDto);
+        RestResponse<MemberResponse> restResponse = new RestResponse<>("회원가입에 성공하였습니다.", 201, member);
+        return new ResponseEntity<>(restResponse, HttpStatus.CREATED);
     }
 }
 
